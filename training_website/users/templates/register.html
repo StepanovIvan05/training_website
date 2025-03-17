@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <!-- Подключение CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="auth-container">
+        <h2 class="auth-title">Регистрация</h2>
+        <hr style="border: none; border-top: 1px solid #000;">
+        {% if form.errors %}
+            <div class="error-message">
+                Пожалуйста, исправьте ошибки ниже.
+            </div>
+        {% endif %}
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        </form>
+        <div class="auth-link">
+            Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a>
+        </div>
+    </div>
+</body>
+</html>

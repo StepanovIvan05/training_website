@@ -1,0 +1,225 @@
+/* Общие стили для страницы */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e3f6ff;
+    background-image: url('fon.png');
+    margin: 0;
+    padding: 20px;
+}
+
+/* Контейнер для списка тренировок */
+.training-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fccf7c;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовок страницы */
+.training-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Список тренировок */
+.training-list {
+    list-style: none;
+    padding: 0;
+}
+
+/* Элемент списка тренировок */
+.training-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+/* Эффект при наведении на элемент списка */
+.training-item:hover {
+    background-color: #e9ecef;
+}
+
+/* Стили для текста внутри элемента списка */
+.training-item strong {
+    color: #007bff;
+}
+
+.training-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sport-icon {
+    width: 80px;
+    height: 80px;
+    margin-right: 15px;
+}
+
+/* Ссылка "Выйти" */
+.logout-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #dc3545;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+/* Эффект при наведении на ссылку "Выйти" */
+.logout-link:hover {
+    background-color: #c82333;
+}
+
+/* Основной стиль кнопки */
+.btn {
+    background-color: royalblue; /* Цвет фона */
+    color: white; /* Цвет текста */
+    font-size: 25px; /* Размер шрифта */
+    padding: 1px 7px; /* Внутренние отступы */
+    border: none; /* Убираем границу */
+    border-radius: 8px; /* Закругление углов */
+    cursor: pointer; /* Делаем курсор в виде руки */
+    transition: all 0.3s ease-in-out; /* Плавный переход эффектов */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Тень */
+}
+
+/* Эффект при наведении */
+.btn:hover {
+    background-color: dodgerblue; /* Меняем цвет */
+    transform: scale(1.02); /* Немного увеличиваем кнопку */
+}
+
+/* Эффект при нажатии */
+.btn:active {
+    background-color: navy; /* Темнее при нажатии */
+    transform: scale(0.98); /* Слегка уменьшаем */
+}
+
+/* Если нужно сделать кнопку "прозрачной" */
+.btn.transparent {
+    background-color: transparent;
+    color: royalblue;
+    border: 2px solid royalblue;
+}
+
+/* Делаем кнопку "неактивной" */
+.btn:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Стили формы */
+.form-container {
+    display: none; /* Скрываем форму по умолчанию */
+    margin-top: 20px;
+    padding: 20px 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    /*max-width: 500px;*/
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.input_training_data {
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.save-btn {
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.save-btn:hover {
+    background-color: darkgreen;
+}
+
+
+/* Общие стили для страниц регистрации и входа */
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fccf7c;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовок страницы */
+.auth-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+    margin-top: -5px;
+}
+
+/* Форма */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Поля формы */
+.auth-form input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Кнопка формы */
+.auth-form button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Эффект при наведении на кнопку */
+.auth-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Ссылка "Войти" или "Зарегистрироваться" */
+.auth-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.auth-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* Сообщения об ошибках */
+.error-message {
+    color: #dc3545;
+    margin-bottom: 15px;
+    text-align: center;
+}
