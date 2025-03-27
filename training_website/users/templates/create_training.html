@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить тренировку</title>
+    <!-- Подключение CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="form-container" id="form">
+        <h2 class="auth-title">Заполните данные</h2>
+        <hr style="border: none; border-top: 1px solid #000;">
+        <form method="POST" action="{% url 'create_training' %}">
+            {% csrf_token %}
+            
+            {{ form.non_field_errors }}
+            
+            <div class="auth-form">
+                {{ form.date.label_tag }}
+                {{ form.date }}
+                {{ form.date.errors }}
+            </div>
+    
+            <div class="auth-form">
+                {{ form.sport_type.label_tag }}
+                {{ form.sport_type }}
+                {{ form.sport_type.errors }}
+            </div>
+    
+            <div class="auth-form">
+                {{ form.location.label_tag }}
+                {{ form.location }}
+                {{ form.location.errors }}
+            </div>
+    
+            <button type="submit" class="btn">Сохранить</button>
+        </form>
+    </div>
+</body>

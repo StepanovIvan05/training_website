@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+from .models import Training
 
 User = get_user_model()
 
@@ -24,3 +25,11 @@ class RegisterForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label="Имя пользователя")
     password = forms.CharField(label="Пароль", widget=forms.PasswordInput)
+
+class TrainingForm(forms.ModelForm):
+    class Meta:
+        model = Training
+        fields = ['sport_type', 'date', 'location']
+        widgets = {
+            'date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }

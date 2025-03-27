@@ -9,51 +9,29 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
+    <nav>
+        <a href="{% url 'create_training' %}" class="btn" title="Добавить тренировку">Добавить тренировку<a></a>
+        <a href="{% url 'logout' %}" class="btn logout-link">Выйти</a>
+    </nav>
     <div class="training-container">
         <h1 class="training-title">Список тренировок</h1>
         <ul class="training-list">
             {% for training in trainings %}
                 <li class="training-item">
-                    <div class="training-info">
-                        <div>
-                            <strong>Вид спорта:</strong> {{ training.sport_type }} <br>
-                            <strong>Дата и время:</strong> {{ training.date }}<br>
-                            <strong>Место:</strong> {{ training.location }}<br>
-                            <strong>Организатор:</strong> {{ training.organizer.username }}<br>
+                    <a href="{% url 'training_detail' training.pk %}" class="training-link">
+                        <div class="training-info">
+                            <div>
+                                <strong>Вид спорта:</strong> {{ training.sport_type }} <br>
+                                <strong>Дата и время:</strong> {{ training.date }}<br>
+                                <strong>Место:</strong> {{ training.location }}<br>
+                                <strong>Организатор:</strong> {{ training.organizer.username }}<br>
+                            </div>
+                            <img src="{% static 'css/'|add:training.sport_type|add:'.png' %}" alt="Sport Icon" class="sport-icon">
                         </div>
-                        <img src="{% static 'css/'|add:training.sport_type|add:'.png' %}" alt="Sport Icon" class="sport-icon">
-                    </div>
+                    </a>
                 </li>
             {% endfor %}
         </ul>
-        <button class="btn" title="Добавить тренировку" onclick="toggleForm()">+</button>
-        <div class="form-container" id="form">
-            <h3>Заполните данные</h3>
-            <form>
-                <label>Дата и время:</label>
-                <input class="input_training_data" type="datetime-local" required>
-    
-                <label>Вид спорта:</label>
-                <input class="input_training_data" type="text" maxlength="100" required>
-    
-                <label>Место:</label>
-                <input class="input_training_data" type="text" maxlength="255" required>
-    
-                <button type="submit" class="btn">Сохранить</button>
-            </form>
-        </div>
-    
-        <script>
-            function toggleForm() {
-                var form = document.getElementById("form");
-                if (form.style.display === "none" || form.style.display === "") {
-                    form.style.display = "flex"; // Показываем форму
-                } else {
-                    form.style.display = "none"; // Скрываем форму
-                }
-            }
-        </script>
     </div>
-    <a href="{% url 'logout' %}" class="logout-link">Выйти</a>
 </body>
 </html>

@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
         <form method="post" class="auth-form">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+            <button type="submit" class="btn">Зарегистрироваться</button>
         </form>
         <div class="auth-link">
             Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a>

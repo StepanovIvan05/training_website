@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование тренировки</title>
+    <!-- Подключение CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="form-container" id="form">
+        <h2 class="auth-title">Редактирование тренировки</h2>
+        <hr style="border: none; border-top: 1px solid #000;">
+        <form method="POST" action="{% url 'training_edit' training.pk %}">
+            {% csrf_token %}
+            
+            {{ form.non_field_errors }}
+            
+            <div class="auth-form">
+                {{ form.sport_type.label_tag }}
+                {{ form.sport_type }}
+                {{ form.sport_type.errors }}
+            </div>
+    
+            <div class="auth-form">
+                {{ form.date.label_tag }}
+                <input type="datetime-local" name="{{ form.date.name }}" value="{{ form.date.value|date:'Y-m-d\TH:i' }}">
+                {{ form.date.errors }}
+            </div>
+    
+            <div class="auth-form">
+                {{ form.location.label_tag }}
+                {{ form.location }}
+                {{ form.location.errors }}
+            </div>
+    
+            <button type="submit" class="btn">Сохранить изменения</button>
+        </form>
+    </div>
+</body>
+</html>
