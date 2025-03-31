@@ -29,7 +29,7 @@ class LoginForm(AuthenticationForm):
 class TrainingForm(forms.ModelForm):
     class Meta:
         model = Training
-        fields = ['sport_type', 'date', 'location']
+        fields = ['sport_type', 'date', 'location', 'description', 'image', 'max_participants']
         widgets = {
             'date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }

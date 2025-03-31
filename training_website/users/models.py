@@ -11,6 +11,13 @@ class Training(models.Model):
     date = models.DateTimeField(verbose_name="Дата и время")
     location = models.CharField(max_length=255, verbose_name="Место")
     organizer = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Организатор")
+    description = models.TextField(blank=True)  # Описание тренировки
+    image = models.ImageField(upload_to='training_images/', blank=True, null=True)  # Фото
+    max_participants = models.PositiveIntegerField(default=10)  # Лимит участников
+    participants = models.ManyToManyField(User, related_name="trainings", blank=True)  # Записавшиеся
+
+    def is_full(self):
+        return self.participants.count() >= self.max_participants
 
     def clean(self):
         if self.date < timezone.now():

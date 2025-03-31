@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -46,7 +46,7 @@ def user_logout(request):
 @login_required
 def create_training(request):
     if request.method == 'POST':
-        form = TrainingForm(request.POST)
+        form = TrainingForm(request.POST, request.FILES)
         if form.is_valid():
             training = form.save(commit=False)
             training.organizer = request.user  # Привязываем текущего пользователя
@@ -84,3 +84,29 @@ class TrainingDeleteView(LoginRequiredMixin, DeleteView):
         if obj.organizer != request.user:
             raise PermissionDenied("Вы не можете удалить эту тренировку")
         return super().dispatch(request, *args, **kwargs)
+    
+@login_required
+def join_training(request, training_id):
+    training = get_object_or_404(Training, id=training_id)
+    
+    if training.is_full():
+        messages.error(request, "Все места заняты!")
+    elif request.user in training.participants.all():
+        messages.info(request, "Вы уже записаны!")
+    else:
+        training.participants.add(request.user)
+        messages.success(request, "Вы успешно записались!")
+
+    return redirect('training_detail', pk=training.id)
+
+@login_required
+def leave_training(request, training_id):
+    training = get_object_or_404(Training, id=training_id)
+
+    if request.user in training.participants.all():
+        training.participants.remove(request.user)
+        messages.success(request, "Вы отменили запись.")
+    else:
+        messages.error(request, "Вы не записаны на эту тренировку!")
+
+    return redirect('training_detail', pk=training.id)

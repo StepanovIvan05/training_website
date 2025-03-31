@@ -12,14 +12,26 @@
     <div class="form-container" id="form">
         <h2 class="auth-title">Заполните данные</h2>
         <hr style="border: none; border-top: 1px solid #000;">
-        <form method="POST" action="{% url 'create_training' %}">
+        <form method="POST" enctype="multipart/form-data" action="{% url 'create_training' %}">
             {% csrf_token %}
             
             {{ form.non_field_errors }}
+
+            {% if form.errors %}
+            <div class="error">
+            <p>Ошибка при сохранении:</p>
+            <ul>
+                {% for field, errors in form.errors.items %}
+                <li>{{ field }}: {{ errors }}</li>
+                {% endfor %}
+            </ul>
+            </div>
+            {% endif %}
+
             
             <div class="auth-form">
                 {{ form.date.label_tag }}
-                {{ form.date }}
+                <input type="datetime-local" name="{{ form.date.name }}" value="{{ form.date.value|date:'Y-m-d\TH:i' }}">
                 {{ form.date.errors }}
             </div>
     
@@ -33,6 +45,24 @@
                 {{ form.location.label_tag }}
                 {{ form.location }}
                 {{ form.location.errors }}
+            </div>
+
+            <div class="auth-form">
+                {{ form.description.label_tag }}
+                {{ form.description }}
+                {{ form.description.errors }}
+            </div>
+
+            <div class="auth-form">
+                {{ form.image.label_tag }}
+                {{ form.image }}
+                {{ form.image.errors }}
+            </div>
+
+            <div class="auth-form">
+                {{ form.max_participants.label_tag }}
+                {{ form.max_participants }}
+                {{ form.max_participants.errors }}
             </div>
     
             <button type="submit" class="btn">Сохранить</button>

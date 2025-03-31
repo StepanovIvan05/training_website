@@ -4,15 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Детали тренировки</title>
+    <title>{{ training.sport_type }} - {{ training.date }}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <div class="training-detail">
+
+        {% if training.image %}
+            <img src="{{ training.image.url }}" alt="Фото тренировки" class="training-img">
+        {% endif %}
+
         <h2>{{ training.sport_type }}</h2>
         <p><strong>Дата:</strong> {{ training.date }}</p>
         <p><strong>Место:</strong> {{ training.location }}</p>
-        <p><strong>Организатор:</strong> {{ training.organizer.username }}</p>
+        <p><strong>Описание:</strong> {{ training.description }}</p>
 
         {% if user == training.organizer %}
             <a href="{% url 'training_edit' training.pk %}" class="btn">Редактировать</a>
@@ -21,6 +26,27 @@
                 <button type="submit" style="margin-left: 1px" class="btn logout-link" onclick="return confirm('Вы уверены, что хотите удалить тренировку?');">Удалить</button>
             </form>
         {% endif %}
+
+        <p><strong>Организатор:</strong> {{ training.organizer.username }}</p>
+        <p><strong>Участники ({{ training.participants.count }}/{{ training.max_participants }}):</strong></p>
+        <ul class="training-list">
+            {% for user in training.participants.all %}
+                <li>{{ user.username }}</li>
+            {% empty %}
+                <li>Пока никто не записался.</li>
+            {% endfor %}
+        </ul>
+
+        {% if user.is_authenticated %}
+        {% if user in training.participants.all %}
+            <a href="{% url 'leave_training' training.id %}" class="btn logout-link">Отменить участие</a>
+        {% elif training.participants.count < training.max_participants %}
+            <a href="{% url 'join_training' training.id %}" class="btn">Записаться</a>
+        {% else %}
+            <p class="full-message">Все места заняты!</p>
+        {% endif %}
+        {% endif %}
+
     </div>
 </body>
 </html>

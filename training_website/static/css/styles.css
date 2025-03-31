@@ -19,6 +19,13 @@ nav {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+}
+
+
 /* Контейнер для списка тренировок */
 .training-container {
     max-width: 1000px;
@@ -77,13 +84,6 @@ nav {
     margin-left: 50%;
 }
 
-/* Ссылка "Выйти" */
-.btn.logout-link {
-    margin-left: 83%;
-    color: #ff0000;
-    border: 2px solid #ff0000;
-}
-
 /* Основной стиль кнопки */
 .btn {
     display: inline-block;
@@ -123,6 +123,13 @@ nav {
     background-color: gray;
     cursor: not-allowed;
     opacity: 0.5;
+}
+
+/* Ссылка "Выйти" */
+.btn.logout-link {
+    margin-left: 80%;
+    color: #ff0000;
+    border: 2px solid #ff0000;
 }
 
 /* Стили формы */

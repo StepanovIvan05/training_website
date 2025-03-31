@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MEDIA_URL = '/media/'  # URL для доступа к файлам
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Директория хранения файлов
 
 # Application definition
 
