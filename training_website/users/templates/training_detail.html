@@ -8,44 +8,70 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <div class="training-detail">
+    <header id="navbar">
 
-        {% if training.image %}
-            <img src="{{ training.image.url }}" alt="Фото тренировки" class="training-img">
-        {% endif %}
-
-        <h2>{{ training.sport_type }}</h2>
-        <p><strong>Дата:</strong> {{ training.date }}</p>
-        <p><strong>Место:</strong> {{ training.location }}</p>
-        <p><strong>Описание:</strong> {{ training.description }}</p>
-
-        {% if user == training.organizer %}
-            <a href="{% url 'training_edit' training.pk %}" class="btn">Редактировать</a>
-            <form method="post" action="{% url 'training_delete' training.pk %}" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" style="margin-left: 1px" class="btn logout-link" onclick="return confirm('Вы уверены, что хотите удалить тренировку?');">Удалить</button>
-            </form>
-        {% endif %}
-
-        <p><strong>Организатор:</strong> {{ training.organizer.username }}</p>
-        <p><strong>Участники ({{ training.participants.count }}/{{ training.max_participants }}):</strong></p>
-        <ul class="training-list">
-            {% for user in training.participants.all %}
-                <li>{{ user.username }}</li>
-            {% empty %}
-                <li>Пока никто не записался.</li>
-            {% endfor %}
-        </ul>
-
+        <a href="{% url 'training_list' %}" class="btn">К списку тренировок</a>
         {% if user.is_authenticated %}
         {% if user in training.participants.all %}
-            <a href="{% url 'leave_training' training.id %}" class="btn logout-link">Отменить участие</a>
+            <a href="{% url 'leave_training' training.id %}" style="margin-left: auto" class="btn red">Отменить участие</a>
         {% elif training.participants.count < training.max_participants %}
             <a href="{% url 'join_training' training.id %}" class="btn">Записаться</a>
         {% else %}
             <p class="full-message">Все места заняты!</p>
         {% endif %}
         {% endif %}
+
+        {% if user == training.organizer %}
+            <a href="{% url 'training_edit' training.pk %}" class="btn">Редактировать</a>
+            <form method="post" action="{% url 'training_delete' training.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn red" onclick="return confirm('Вы уверены, что хотите удалить тренировку?');">Удалить</button>
+            </form>
+        {% endif %}
+        <a href="{% url 'logout' %}" class="btn red logout-link">Выйти</a>
+    </header>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let lastScrollTop = 0;
+            const navbar = document.getElementById("navbar");
+        
+            window.addEventListener("scroll", function () {
+                let scrollTop = window.scrollY || document.documentElement.scrollTop;
+        
+                if (scrollTop > lastScrollTop) {
+                    // Прокрутка вниз - скрываем шапку
+                    navbar.style.top = "-100px";
+                } else {
+                    // Прокрутка вверх - показываем шапку
+                    navbar.style.top = "0";
+                }
+        
+                lastScrollTop = scrollTop;
+            });
+        });
+        </script>
+    <div class="training-detail">
+
+        <h2>{{ training.sport_type }}</h2>
+
+        {% if training.image %}
+            <img src="{{ training.image.url }}" alt="Фото тренировки" class="training-img">
+        {% endif %}
+
+        <p class="training-item"><strong>Дата:</strong> {{ training.date }}</p>
+        <p class="training-item"><strong>Место:</strong> {{ training.location }}</p>
+        <p class="training-item"><strong>Описание:</strong> {{ training.description }}</p>
+        <p class="training-item"><strong>Организатор:</strong> {{ training.organizer.username }}</p>
+        <div style="padding-top: 0" class="training-item">
+            <p><strong>Участники ({{ training.participants.count }}/{{ training.max_participants }}):</strong></p>
+            <ul class="training-list">
+                {% for user in training.participants.all %}
+                    <li style="text-align: left">{{ user.username }}</li>
+                {% empty %}
+                    <li style="text-align: left">Пока никто не записался.</li>
+                {% endfor %}
+            </ul>
+        </div>
 
     </div>
 </body>

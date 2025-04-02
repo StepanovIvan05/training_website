@@ -9,10 +9,30 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <nav>
+    <header id="navbar">
         <a href="{% url 'create_training' %}" class="btn" title="Добавить тренировку">Добавить тренировку<a></a>
-        <a href="{% url 'logout' %}" class="btn logout-link">Выйти</a>
-    </nav>
+        <a href="{% url 'logout' %}" class="btn red logout-link">Выйти</a>
+    </header>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let lastScrollTop = 0;
+            const navbar = document.getElementById("navbar");
+        
+            window.addEventListener("scroll", function () {
+                let scrollTop = window.scrollY || document.documentElement.scrollTop;
+        
+                if (scrollTop > lastScrollTop) {
+                    // Прокрутка вниз - скрываем шапку
+                    navbar.style.top = "-100px";
+                } else {
+                    // Прокрутка вверх - показываем шапку
+                    navbar.style.top = "0";
+                }
+        
+                lastScrollTop = scrollTop;
+            });
+        });
+        </script>
     <div class="training-container">
         <h1 class="training-title">Список тренировок</h1>
         <ul class="training-list">
@@ -21,10 +41,11 @@
                     <a href="{% url 'training_detail' training.pk %}" class="training-link">
                         <div class="training-info">
                             <div>
-                                <strong>Вид спорта:</strong> {{ training.sport_type }} <br>
+                                <strong>Вид спорта:</strong> {{ training.sport_type }}<br>
                                 <strong>Дата и время:</strong> {{ training.date }}<br>
                                 <strong>Место:</strong> {{ training.location }}<br>
                                 <strong>Организатор:</strong> {{ training.organizer.username }}<br>
+                                <strong>Количество участников:</strong> {{training.participants.count}}/{{ training.max_participants }}<br>
                             </div>
                             <img src="{% static 'css/'|add:training.sport_type|add:'.png' %}" alt="Sport Icon" class="sport-icon">
                         </div>

@@ -9,7 +9,32 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <div class="form-container" id="form">
+    <header id="navbar">
+        <a href="{% url 'training_list' %}" class="btn">К списку тренировок</a>
+        <a href="{% url 'logout' %}" class="btn red logout-link">Выйти</a>
+    </header>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let lastScrollTop = 0;
+            const navbar = document.getElementById("navbar");
+        
+            window.addEventListener("scroll", function () {
+                let scrollTop = window.scrollY || document.documentElement.scrollTop;
+        
+                if (scrollTop > lastScrollTop) {
+                    // Прокрутка вниз - скрываем шапку
+                    navbar.style.top = "-100px";
+                } else {
+                    // Прокрутка вверх - показываем шапку
+                    navbar.style.top = "0";
+                }
+        
+                lastScrollTop = scrollTop;
+            });
+        });
+        </script>
+        
+    <div style="margin-top: 5%" class="form-container" id="form">
         <h2 class="auth-title">Заполните данные</h2>
         <hr style="border: none; border-top: 1px solid #000;">
         <form method="POST" enctype="multipart/form-data" action="{% url 'create_training' %}">
