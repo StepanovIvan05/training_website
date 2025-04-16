@@ -6,8 +6,8 @@ from django.views.generic import DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
-from .forms import RegisterForm, LoginForm, TrainingForm
-from .models import Training
+from .forms import RegisterForm, LoginForm, TrainingForm, TrainingFilterForm
+from .models import Training, SportType
 
 def register(request):
     if request.method == 'POST':
@@ -36,8 +36,30 @@ def user_login(request):
 
 @login_required
 def training_list(request):
+    form = TrainingFilterForm(request.GET)
     trainings = Training.objects.all()
-    return render(request, 'training_list.html', {'trainings': trainings})
+
+    if form.is_valid():
+        if form.cleaned_data['sport']:
+            trainings = trainings.filter(sport_type=form.cleaned_data['sport'])
+        if form.cleaned_data['organizer']:
+            trainings = trainings.filter(organizer=form.cleaned_data['organizer'])
+        if form.cleaned_data['location']:
+            trainings = trainings.filter(location=form.cleaned_data['location'])
+        if form.cleaned_data['date']:
+            trainings = trainings.filter(date=form.cleaned_data['date'])
+
+        sort_field = form.cleaned_data['sort']
+        if sort_field:
+            if sort_field == 'sport':
+                trainings = trainings.order_by('sport_type__name')
+            else:
+                trainings = trainings.order_by(sort_field)
+
+    return render(request, 'training_list.html', {
+        'form': form,
+        'trainings': trainings
+    })
 
 def user_logout(request):
     logout(request)
@@ -73,6 +95,12 @@ class TrainingUpdateView(LoginRequiredMixin, UpdateView):
         if obj.organizer != request.user:
             raise PermissionDenied("Вы не можете редактировать эту тренировку")
         return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sport_types'] = SportType.objects.all()
+        return context                        
+
     
 class TrainingDeleteView(LoginRequiredMixin, DeleteView):
     model = Training

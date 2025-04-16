@@ -6,8 +6,14 @@ from django.utils import timezone
 class User(AbstractUser):
     email = models.EmailField(unique=True)
 
+class SportType(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Training(models.Model):
-    sport_type = models.CharField(max_length=100, verbose_name="Вид спорта")
+    sport_type = models.ForeignKey(SportType, on_delete=models.CASCADE)
     date = models.DateTimeField(verbose_name="Дата и время")
     location = models.CharField(max_length=255, verbose_name="Место")
     organizer = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Организатор")
@@ -25,3 +31,5 @@ class Training(models.Model):
 
     def __str__(self):
         return f"{self.sport_type} - {self.date}"
+    
+    

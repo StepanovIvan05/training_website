@@ -7,8 +7,21 @@
     <title>Добавить тренировку</title>
     <!-- Подключение CSS -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Подключаем jQuery (если не подключен) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Подключаем Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 </head>
 <body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $('select').select2({
+                width: 'resolve',
+                language: "ru"
+            });
+        });
+    </script>
     <header id="navbar">
         <a href="{% url 'training_list' %}" class="btn">К списку тренировок</a>
         <a href="{% url 'logout' %}" class="btn red logout-link">Выйти</a>
@@ -59,7 +72,7 @@
                 <input type="datetime-local" name="{{ form.date.name }}" value="{{ form.date.value|date:'Y-m-d\TH:i' }}">
                 {{ form.date.errors }}
             </div>
-    
+
             <div class="auth-form">
                 {{ form.sport_type.label_tag }}
                 {{ form.sport_type }}

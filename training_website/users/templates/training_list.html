@@ -7,11 +7,33 @@
     <title>Список тренировок</title>
     <!-- Подключение CSS -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 </head>
 <body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $('select').select2({
+                width: 'resolve',
+                language: "ru"
+            });
+        });
+    </script>
     <header id="navbar">
-        <a href="{% url 'create_training' %}" class="btn" title="Добавить тренировку">Добавить тренировку<a></a>
-        <a href="{% url 'logout' %}" class="btn red logout-link">Выйти</a>
+        <a href="{% url 'create_training' %}" style="float: left; font-size: 13px; margin-right: 10px" class="btn" title="Добавить тренировку">Добавить тренировку<a></a>
+        <form method="get" style="float: left" class="filter-form">
+            <div class="form-row">
+                {{ form.sport.label_tag }} {{ form.sport }}
+                {{ form.organizer.label_tag }} {{ form.organizer }}
+                {{ form.location.label_tag }} {{ form.location }}
+                {{ form.date.label_tag }} {{ form.date }}
+                {{ form.sort.label_tag }} {{ form.sort }}
+                <button type="submit" style="font-size: 13px" class="btn">Применить</button>
+            </div>
+        </form>
+        <a href="{% url 'logout' %}" style="font-size: 13px" class="btn red logout-link">Выйти</a>
     </header>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -47,7 +69,7 @@
                                 <strong>Организатор:</strong> {{ training.organizer.username }}<br>
                                 <strong>Количество участников:</strong> {{training.participants.count}}/{{ training.max_participants }}<br>
                             </div>
-                            <img src="{% static 'css/'|add:training.sport_type|add:'.png' %}" alt="Sport Icon" class="sport-icon">
+                            <img src="{% static 'css/'|add:training.sport_type.name|add:'.png' %}" alt="Sport Icon" class="sport-icon">
                         </div>
                     </a>
                 </li>

@@ -181,13 +181,33 @@ p {
 }
 
 /* Поля формы */
-.auth-form input {
+.auth-form input,
+.auth-form select,
+.auth-form textarea {
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-row label {
+    margin-right: 5px;
+    white-space: nowrap;
+}
+
+.form-row select,
+.form-row input {
+    padding: 5px;
+    font-size: 1em;
 }
 
 /* Ссылка "Войти" или "Зарегистрироваться" */

@@ -7,6 +7,11 @@
     <title>Редактирование тренировки</title>
     <!-- Подключение CSS -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Подключаем jQuery (если не подключен) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Подключаем Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 </head>
 <body>
     <header id="navbar">
@@ -32,7 +37,15 @@
                 lastScrollTop = scrollTop;
             });
         });
-        </script>
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $('select').select2({
+                width: 'resolve',
+                language: "ru"
+            });
+        });
+    </script>
     <div style="margin-top: 5%" class="form-container" id="form">
         <h2 class="auth-title">Редактирование тренировки</h2>
         <hr style="border: none; border-top: 1px solid #000;">
