@@ -22,18 +22,25 @@
         });
     </script>
     <header id="navbar">
-        <a href="{% url 'create_training' %}" style="float: left; font-size: 13px; margin-right: 10px" class="btn" title="Добавить тренировку">Добавить тренировку<a></a>
-        <form method="get" style="float: left" class="filter-form">
+        <div style="float: left">
+            <a href="{% url 'create_training' %}" style="font-size: 13px; margin-right: 10px" class="btn" title="Добавить тренировку">Добавить тренировку<a></a>
+        </div>
+        <form method="get" class="filter-form">
             <div class="form-row">
-                {{ form.sport.label_tag }} {{ form.sport }}
-                {{ form.organizer.label_tag }} {{ form.organizer }}
-                {{ form.location.label_tag }} {{ form.location }}
-                {{ form.date.label_tag }} {{ form.date }}
-                {{ form.sort.label_tag }} {{ form.sort }}
-                <button type="submit" style="font-size: 13px" class="btn">Применить</button>
+                <p>Фильтр:</p>
+                <p> {{ form.sport }} </p>
+                <p> {{ form.organizer }} </p>
+                <p> {{ form.location }} </p>  
+                <p> {{ form.date }} </p>
+                <p> {{ form.max_participants }} </p> 
+                <p style="float: left">Сортировать по:</p>
+                <p> {{ form.sort }} </p>
+                <button type="submit" style="font-size: 13px; padding: 10px; max-height: 40px" class="btn">Применить</button>
             </div>
         </form>
-        <a href="{% url 'logout' %}" style="font-size: 13px" class="btn red logout-link">Выйти</a>
+        <div style="float: right">
+            <a href="{% url 'logout' %}" style="font-size: 13px" class="btn red logout-link">Выйти</a>
+        </div>
     </header>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -45,7 +52,7 @@
         
                 if (scrollTop > lastScrollTop) {
                     // Прокрутка вниз - скрываем шапку
-                    navbar.style.top = "-100px";
+                    navbar.style.top = "-100%";
                 } else {
                     // Прокрутка вверх - показываем шапку
                     navbar.style.top = "0";

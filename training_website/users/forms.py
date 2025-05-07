@@ -41,22 +41,27 @@ class TrainingFilterForm(forms.Form):
     sport = forms.ModelChoiceField(
         queryset=SportType.objects.all().order_by('name'),
         required=False,
-        label='Фильтр:',
+        label='Вид спорта',
     )
     organizer = forms.ModelChoiceField(
         queryset=User.objects.all(),
         required=False,
-        label='',
+        label='Организатор',
     )
     location = forms.ChoiceField(
         choices=[],
         required=False,
-        label='',
+        label='Место',
     )
     date = forms.ChoiceField(
         choices=[],
         required=False,
-        label='',
+        label='Дата',
+    )
+    max_participants = forms.ChoiceField(
+        choices=[],
+        required=False,
+        label='Максимальное количество участников',
     )
     sort = forms.ChoiceField(
         choices=[
@@ -64,6 +69,7 @@ class TrainingFilterForm(forms.Form):
             ('location', 'Месту'),
             ('organizer', 'Организатору'),
             ('sport', 'Виду спорта'),
+            ('max_participants', 'Макс. числу участников')
         ],
         required=False,
         label='Сортировка по'
@@ -77,11 +83,14 @@ class TrainingFilterForm(forms.Form):
         ]
 
         self.fields['organizer'].choices = [('', 'Организатор')] + [
-            (org, Training.objects.get(id=org).organizer.username) for org in Training.objects.values_list('organizer', flat=True).distinct()
+            (org, User.objects.get(id=org).username) for org in Training.objects.values_list('organizer', flat=True).distinct()
         ]
 
         self.fields['location'].choices = [('', 'Место')] + [
             (loc, loc) for loc in Training.objects.values_list('location', flat=True).distinct()
+        ]
+        self.fields['max_participants'].choices = [('', 'Макс. число участников')] + [
+            (maxpart, maxpart) for maxpart in Training.objects.values_list('max_participants', flat=True).distinct()
         ]
         self.fields['date'].choices = [('', 'Дата')] + [
             (dt, dt.strftime('%Y-%m-%d %H:%M')) for dt in Training.objects.values_list('date', flat=True).distinct()

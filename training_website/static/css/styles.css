@@ -3,21 +3,21 @@ body {
     font-family: Arial, sans-serif;
     background-color: #e3f6ff;
     background-image: url('fon.png');
-    margin: 0;
     padding: 20px;
 }
 
 /* Стили для блока навигации*/
 header {
-    width: 96%;
-    height: 6.6%;
+    width: 95%;
     top: 0;
+    display: flex;
     padding: 25px 10px 10px 10px;
     position: fixed;
     background-color: #fccf7c;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: top 0.3s;
+    clear: both;
 }
 
 img {
@@ -95,6 +95,7 @@ p {
     background-color: rgba(255, 255, 255, 0); /* Цвет фона */
     color: #007bff;
     text-decoration: none; /*Убираем подчеркивание*/
+    margin-right: 10px;
     padding: 10px 15px; /* Внутренние отступы */
     border: 2px solid #007bff; /* Убираем границу */
     border-radius: 5px; /* Закругление углов */
@@ -136,7 +137,7 @@ p {
     border: 2px solid #ff0000;
 }
 .btn.red.logout-link {
-    float: right;
+    margin-left: 5px;
 }
 
 /* Стили формы */
@@ -192,28 +193,16 @@ p {
     font-size: 16px;
 }
 
-.form-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
-}
-
 .form-row label {
     margin-right: 5px;
     white-space: nowrap;
 }
 
 .form-row select,
-.form-row input {
-    padding: 5px;
-    font-size: 1em;
-}
-
-/* Ссылка "Войти" или "Зарегистрироваться" */
-.auth-link {
+.form-row p {
+    float: left;
     text-align: center;
-    margin-top: 15px;
+    margin: 1px;
 }
 
 .auth-link a {

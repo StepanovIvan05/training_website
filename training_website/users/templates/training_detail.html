@@ -9,26 +9,29 @@
 </head>
 <body>
     <header id="navbar">
+        <div style="float: left">
+            <a href="{% url 'training_list' %}" style="float: left" class="btn">К списку тренировок</a>
+            {% if user.is_authenticated %}
+            {% if user in training.participants.all %}
+                <a href="{% url 'leave_training' training.id %}" style="margin-left: auto; float: left" class="btn red">Отменить участие</a>
+            {% elif training.participants.count < training.max_participants %}
+                <a href="{% url 'join_training' training.id %}" style="float: left" class="btn">Записаться</a>
+            {% else %}
+                <p style="float: left" class="full-message">Все места заняты!</p>
+            {% endif %}
+            {% endif %}
 
-        <a href="{% url 'training_list' %}" class="btn">К списку тренировок</a>
-        {% if user.is_authenticated %}
-        {% if user in training.participants.all %}
-            <a href="{% url 'leave_training' training.id %}" style="margin-left: auto" class="btn red">Отменить участие</a>
-        {% elif training.participants.count < training.max_participants %}
-            <a href="{% url 'join_training' training.id %}" class="btn">Записаться</a>
-        {% else %}
-            <p class="full-message">Все места заняты!</p>
-        {% endif %}
-        {% endif %}
-
-        {% if user == training.organizer %}
-            <a href="{% url 'training_edit' training.pk %}" class="btn">Редактировать</a>
-            <form method="post" action="{% url 'training_delete' training.pk %}" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn red" onclick="return confirm('Вы уверены, что хотите удалить тренировку?');">Удалить</button>
-            </form>
-        {% endif %}
-        <a href="{% url 'logout' %}" class="btn red logout-link">Выйти</a>
+            {% if user == training.organizer %}
+                <a href="{% url 'training_edit' training.pk %}" style="float: left" class="btn">Редактировать</a>
+                <form method="post" action="{% url 'training_delete' training.pk %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn red" onclick="return confirm('Вы уверены, что хотите удалить тренировку?');">Удалить</button>
+                </form>
+            {% endif %}
+            </div>
+        <div style="right: 5%">
+            <a href="{% url 'logout' %}" class="btn red logout-link">Выйти</a>
+        </div>
     </header>
     <script>
         document.addEventListener("DOMContentLoaded", function () {

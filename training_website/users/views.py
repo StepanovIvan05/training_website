@@ -48,6 +48,8 @@ def training_list(request):
             trainings = trainings.filter(location=form.cleaned_data['location'])
         if form.cleaned_data['date']:
             trainings = trainings.filter(date=form.cleaned_data['date'])
+        if form.cleaned_data['max_participants']:
+            trainings = trainings.filter(max_participants=form.cleaned_data['max_participants'])
 
         sort_field = form.cleaned_data['sort']
         if sort_field:
