@@ -11,14 +11,17 @@
     <header id="navbar">
         <div style="float: left">
             <a href="{% url 'training_list' %}" style="float: left" class="btn">К списку тренировок</a>
+
             {% if user.is_authenticated %}
-            {% if user in training.participants.all %}
-                <a href="{% url 'leave_training' training.id %}" style="margin-left: auto; float: left" class="btn red">Отменить участие</a>
-            {% elif training.participants.count < training.max_participants %}
-                <a href="{% url 'join_training' training.id %}" style="float: left" class="btn">Записаться</a>
-            {% else %}
-                <p style="float: left" class="full-message">Все места заняты!</p>
-            {% endif %}
+                {% if training.is_finished %}
+                <p style="float: left; margin-right: 5px" class="full-message">Тренировка окончена </p>
+                {% elif user in training.participants.all %}
+                    <a href="{% url 'leave_training' training.id %}" style="margin-left: auto; float: left" class="btn red">Отменить участие</a>
+                {% elif training.participants.count < training.max_participants %}
+                    <a href="{% url 'join_training' training.id %}" style="float: left" class="btn">Записаться</a>
+                {% else %}
+                    <p style="float: left" class="full-message">Все места заняты!</p>
+                {% endif %}
             {% endif %}
 
             {% if user == training.organizer %}
@@ -62,9 +65,11 @@
         {% endif %}
 
         <p class="training-item"><strong>Дата:</strong> {{ training.date }}</p>
+        <p class="training-item"><strong>Продолжительность:</strong> {{ training.duration }}</p>
         <p class="training-item"><strong>Место:</strong> {{ training.location }}</p>
         <p class="training-item"><strong>Описание:</strong> {{ training.description }}</p>
         <p class="training-item"><strong>Организатор:</strong> {{ training.organizer.username }}</p>
+        <p class="training-item"><strong>Рейтинг организатора:</strong> {{ training.organizer.organizer_rating|floatformat:1 }}</p>
         <div style="padding-top: 0" class="training-item">
             <p><strong>Участники ({{ training.participants.count }}/{{ training.max_participants }}):</strong></p>
             <ul class="training-list">
@@ -75,6 +80,29 @@
                 {% endfor %}
             </ul>
         </div>
+
+        {% if training.is_finished and user in training.participants.all %}
+            {% if can_review %}
+                <h3>Оставить отзыв:</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ review_form.as_p }}
+                    <button type="submit">Отправить отзыв</button>
+                </form>
+            {% elif has_reviewed %}
+                <p>Вы уже оставили отзыв</p>
+            {% endif %}
+        {% endif %}
+
+        <h3>Отзывы:</h3>
+        {% for review in training.reviews.all %}
+            <div>
+                <strong>{{ review.author.username }}</strong> — Оценка: {{ review.rating }}
+                <p>{{ review.comment }}</p>
+            </div>
+        {% empty %}
+            <p>Пока нет отзывов</p>
+        {% endfor %}
 
     </div>
 </body>

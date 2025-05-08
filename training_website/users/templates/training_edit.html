@@ -65,6 +65,12 @@
                 <input type="datetime-local" name="{{ form.date.name }}" value="{{ form.date.value|date:'Y-m-d\TH:i' }}">
                 {{ form.date.errors }}
             </div>
+
+            <div class="auth-form">
+                {{ form.duration.label_tag }}
+                {{ form.duration }}
+                {{ form.duration.errors }}
+            </div>
     
             <div class="auth-form">
                 {{ form.location.label_tag }}

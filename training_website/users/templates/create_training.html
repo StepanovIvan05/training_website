@@ -74,6 +74,12 @@
             </div>
 
             <div class="auth-form">
+                {{ form.duration.label_tag }}
+                {{ form.duration }}
+                {{ form.duration.errors }}
+            </div>
+
+            <div class="auth-form">
                 {{ form.sport_type.label_tag }}
                 {{ form.sport_type }}
                 {{ form.sport_type.errors }}

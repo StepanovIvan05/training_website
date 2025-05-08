@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from .models import Training, SportType
+from .models import Training, SportType, Review
 
 User = get_user_model()
 
@@ -32,7 +32,7 @@ class TrainingForm(forms.ModelForm):
 
     class Meta:
         model = Training
-        fields = ['sport_type', 'date', 'location', 'description', 'image', 'max_participants']
+        fields = ['sport_type', 'date', 'location', 'description', 'image', 'duration', 'max_participants']
         widgets = {
             'date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             }
@@ -95,3 +95,8 @@ class TrainingFilterForm(forms.Form):
         self.fields['date'].choices = [('', 'Дата')] + [
             (dt, dt.strftime('%Y-%m-%d %H:%M')) for dt in Training.objects.values_list('date', flat=True).distinct()
         ]
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'comment']

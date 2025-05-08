@@ -6,7 +6,7 @@ from django.views.generic import DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
-from .forms import RegisterForm, LoginForm, TrainingForm, TrainingFilterForm
+from .forms import RegisterForm, LoginForm, TrainingForm, TrainingFilterForm, ReviewForm
 from .models import Training, SportType
 
 def register(request):
@@ -48,6 +48,8 @@ def training_list(request):
             trainings = trainings.filter(location=form.cleaned_data['location'])
         if form.cleaned_data['date']:
             trainings = trainings.filter(date=form.cleaned_data['date'])
+        """if form.cleaned_data['duration']:
+            trainings = trainings.filter(duration=form.cleaned_data['duration'])"""
         if form.cleaned_data['max_participants']:
             trainings = trainings.filter(max_participants=form.cleaned_data['max_participants'])
 
@@ -85,6 +87,48 @@ class TrainingDetailView(DetailView):
     model = Training
     template_name = 'training_detail.html'
     context_object_name = 'training'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        training = self.get_object()
+        user = self.request.user
+
+        context['review_form'] = ReviewForm()
+        context['can_review'] = (
+            training.is_finished and
+            user in training.participants.all() and
+            not training.reviews.filter(author=user).exists()
+        )
+        context['has_reviewed'] = training.reviews.filter(author=user).exists()
+        context['reviews'] = training.reviews.all()
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        training = self.object
+
+        if not training.is_finished or request.user not in training.participants.all():
+            return redirect('training_detail', pk=training.pk)
+
+        if training.reviews.filter(author=request.user).exists():
+            # У пользователя уже есть отзыв — перенаправим с сообщением
+            messages.warning(request, "Вы уже оставили отзыв.")
+            return redirect('training_detail', pk=training.pk)
+
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.author = request.user
+            review.training = training
+            review.save()
+            messages.success(request, "Отзыв успешно отправлен.")
+            return redirect('training_detail', pk=training.pk)
+
+        # Если форма невалидна — отобразим с ошибками
+        context = self.get_context_data()
+        context['review_form'] = form
+        return self.render_to_response(context)
 
 class TrainingUpdateView(LoginRequiredMixin, UpdateView):
     model = Training
