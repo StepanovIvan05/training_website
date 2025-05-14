@@ -63,6 +63,11 @@ class TrainingFilterForm(forms.Form):
         required=False,
         label='Максимальное количество участников',
     )
+    is_finished = forms.ChoiceField(
+        choices=[],
+        required=False,
+        label='Завершенность тренировки'
+    )
     sort = forms.ChoiceField(
         choices=[
             ('date', 'Дате'),
@@ -95,6 +100,7 @@ class TrainingFilterForm(forms.Form):
         self.fields['date'].choices = [('', 'Дата')] + [
             (dt, dt.strftime('%Y-%m-%d %H:%M')) for dt in Training.objects.values_list('date', flat=True).distinct()
         ]
+        self.fields['is_finished'].choices = [('', 'Все тренировки')] + [('Завершенные','Завершена'), ('Незавершенные', 'Не завершена')]
 
 class ReviewForm(forms.ModelForm):
     class Meta:

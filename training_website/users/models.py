@@ -45,7 +45,7 @@ class Training(models.Model):
 
     @property
     def end_time(self):
-        return self.date + timedelta(minutes=self.duration)
+        return self.date + timedelta(minutes=self.duration-420)
 
     @property
     def is_finished(self):

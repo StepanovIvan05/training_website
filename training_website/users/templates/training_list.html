@@ -5,43 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Список тренировок</title>
-    <!-- Подключение CSS -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            $('select').select2({
-                width: 'resolve',
-                language: "ru"
-            });
-        });
-    </script>
-    <header id="navbar">
-        <div style="float: left">
-            <a href="{% url 'create_training' %}" style="font-size: 13px; margin-right: 10px" class="btn" title="Добавить тренировку">Добавить тренировку<a></a>
-        </div>
-        <form method="get" class="filter-form">
-            <div class="form-row">
-                <p>Фильтр:</p>
-                <p> {{ form.sport }} </p>
-                <p> {{ form.organizer }} </p>
-                <p> {{ form.location }} </p>  
-                <p> {{ form.date }} </p>
-                <p> {{ form.max_participants }} </p> 
-                <p style="float: left">Сортировать по:</p>
-                <p> {{ form.sort }} </p>
-                <button type="submit" style="font-size: 13px; padding: 10px; max-height: 40px" class="btn">Применить</button>
-            </div>
-        </form>
-        <div style="float: right">
-            <a href="{% url 'logout' %}" style="font-size: 13px" class="btn red logout-link">Выйти</a>
-        </div>
-    </header>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let lastScrollTop = 0;
@@ -52,35 +31,89 @@
         
                 if (scrollTop > lastScrollTop) {
                     // Прокрутка вниз - скрываем шапку
-                    navbar.style.top = "-100%";
+                    navbar.style.setProperty("top", "-500px", "important");
                 } else {
                     // Прокрутка вверх - показываем шапку
-                    navbar.style.top = "0";
+                    navbar.style.setProperty("top", "0", "important");
                 }
         
                 lastScrollTop = scrollTop;
             });
         });
         </script>
-    <div class="training-container">
-        <h1 class="training-title">Список тренировок</h1>
-        <ul class="training-list">
+
+    <!-- Header -->
+    <header id="navbar" class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-2">
+            <!-- Бургер-кнопка -->
+            <button class="btn blue" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterSidebar" aria-controls="filterSidebar">
+                &#9776;
+            </button>
+            <a href="{% url 'create_training' %}" class="btn blue">Добавить тренировку</a>
+        </div>
+        <div>
+            <a href="{% url 'logout' %}" class="btn red">Выйти</a>
+        </div>
+    </header>
+
+    <!-- Фильтрация и сортировка -->
+    <div style="background-color: #fccf7c"class="offcanvas offcanvas-start" tabindex="-1" id="filterSidebar" aria-labelledby="filterSidebarLabel">
+        <div class="offcanvas-header">
+            <h5 id="filterSidebarLabel">Фильтрация и сортировка</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form method="get" class="d-flex flex-column gap-2">
+                {{ form.sport.label }}
+                {{ form.sport }}
+
+                {{ form.organizer.label }}
+                {{ form.organizer }}
+
+                {{ form.location.label }}
+                {{ form.location }}
+
+                {{ form.date.label }}
+                {{ form.date }}
+
+                {{ form.max_participants.label }}
+                {{ form.max_participants }}
+                
+                {{ form.is_finished.label }}
+                {{ form.is_finished }}
+
+                <hr>
+                <label>Сортировать по:</label>
+                {{ form.sort }}
+
+                <button type="submit" class="btn blue mt-3">Применить</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="container training-container mt-5 pt-5">
+        <h1 class="training-title mb-4">Список тренировок</h1>
+        <ul class="list-group">
             {% for training in trainings %}
-                <li class="training-item">
-                    <a href="{% url 'training_detail' training.pk %}" class="training-link">
-                        <div class="training-info">
+                <li class="list-group-item training-item p-3">
+                    <a href="{% url 'training_detail' training.pk %}" class="training-link text-decoration-none text-dark">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <div>
                                 <strong>Вид спорта:</strong> {{ training.sport_type }}<br>
                                 <strong>Дата и время:</strong> {{ training.date }}<br>
-                                <strong>Продолжительность:</strong> {{ training.duration }}мин.<br>
+                                <strong>Продолжительность:</strong> {{ training.duration }} мин.<br>
                                 <strong>Место:</strong> {{ training.location }}<br>
                                 <strong>Организатор:</strong> {{ training.organizer.username }}<br>
-                                <strong>Количество участников:</strong> {{training.participants.count}}/{{ training.max_participants }}<br>
+                                <strong>Участники:</strong> {{ training.participants.count }}/{{ training.max_participants }}
                             </div>
-                            <img src="{% static 'css/'|add:training.sport_type.name|add:'.png' %}" alt="Sport Icon" class="sport-icon">
+                            <img src="{% static 'css/'|add:training.sport_type.name|add:'.png' %}" alt="Sport Icon" class="sport-icon ms-3">
                         </div>
                     </a>
                 </li>
+            {% empty %}
+                <li class="list-group-item">Тренировок не найдено.</li>
             {% endfor %}
         </ul>
     </div>

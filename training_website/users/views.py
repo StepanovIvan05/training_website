@@ -8,6 +8,10 @@ from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
 from .forms import RegisterForm, LoginForm, TrainingForm, TrainingFilterForm, ReviewForm
 from .models import Training, SportType
+from django.db.models import F, ExpressionWrapper, DateTimeField, DurationField
+from django.db.models.functions import Cast, Now
+from django.utils import timezone
+from datetime import timedelta
 
 def register(request):
     if request.method == 'POST':
@@ -52,6 +56,16 @@ def training_list(request):
             trainings = trainings.filter(duration=form.cleaned_data['duration'])"""
         if form.cleaned_data['max_participants']:
             trainings = trainings.filter(max_participants=form.cleaned_data['max_participants'])
+        if form.cleaned_data['is_finished']:
+            training_ids = []
+
+            for training in trainings:
+                if form.cleaned_data['is_finished'] == 'Завершенные' and training.is_finished:
+                    training_ids.append(training.id)
+                elif form.cleaned_data['is_finished'] == 'Незавершенные' and not training.is_finished:
+                    training_ids.append(training.id)
+
+            trainings = trainings.filter(id__in=training_ids)
 
         sort_field = form.cleaned_data['sort']
         if sort_field:
