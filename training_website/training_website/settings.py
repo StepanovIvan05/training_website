@@ -37,7 +37,7 @@ SECRET_KEY = 'django-insecure-9^x681ce2*o)708wrr#y!)$5qss0+uhi1f*n7_)o3k^+x3na@#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['51.250.35.103', 'localhost', '127.0.0.1', 'signupsport.ru', 'www.signupsport.ru', 'api.ip.pn']
 
 MEDIA_URL = '/media/'  # URL для доступа к файлам
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Директория хранения файлов
@@ -137,7 +137,6 @@ USE_L10N = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # Указывает на папку static в корне проекта
 ]
@@ -146,3 +145,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CSRF_TRUSTED_ORIGINS = [
+    "https://signupsport.ru",
+    "https://www.signupsport.ru",
+]
