@@ -33,14 +33,14 @@ class SportType(models.Model):
         return self.name
 
 class Training(models.Model):
-    sport_type = models.ForeignKey(SportType, on_delete=models.CASCADE)
+    sport_type = models.ForeignKey(SportType, on_delete=models.CASCADE, verbose_name="Вид спорта")
     date = models.DateTimeField(verbose_name="Дата и время")
     location = models.CharField(max_length=255, verbose_name="Место")
     organizer = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Организатор")
     description = models.TextField(blank=True, verbose_name="Описание")  # Описание тренировки
     image = models.ImageField(upload_to='training_images/', blank=True, null=True, verbose_name="Фото события")  # Фото
     max_participants = models.PositiveIntegerField(default=10, verbose_name="Максимальное количество участников")  # Лимит участников
-    participants = models.ManyToManyField(User, related_name="trainings", blank=True)  # Записавшиеся
+    participants = models.ManyToManyField(User, related_name="trainings", blank=True, verbose_name="Участники")  # Записавшиеся
     duration = models.PositiveIntegerField(verbose_name="Продолжительность (в минутах)", default=60)
 
     @property

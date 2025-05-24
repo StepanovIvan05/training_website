@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" style="min-width: 260px !important;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
+<body style="min-width: 260px !important;">
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -43,18 +43,22 @@
         </script>
 
     <!-- Header -->
-    <header id="navbar" class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
+    <header id="navbar">
+        <!-- Левая группа кнопок -->
         <div class="d-flex align-items-center gap-2">
-            <!-- Бургер-кнопка -->
-            <button class="btn blue" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterSidebar" aria-controls="filterSidebar">
-                &#9776;
-            </button>
-            <a href="{% url 'create_training' %}" class="btn blue">Добавить тренировку</a>
+        <!-- Бургер -->
+        <button class="btn blue" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterSidebar" aria-controls="filterSidebar">
+            ☰
+        </button>
+
+        <!-- Кнопка "Добавить тренировку" (полная и мобильная версии) -->
+        <a href="/create-training/" class="btn blue d-none d-sm-inline-flex">Добавить тренировку</a>
+        <a href="/create-training/" class="btn blue d-inline-flex d-sm-none">+</a>
+                <!-- Кнопка "Выйти" -->
+        <a href="/logout/" class="btn red">Выйти</a>
         </div>
-        <div>
-            <a href="{% url 'logout' %}" class="btn red">Выйти</a>
-        </div>
-    </header>
+  </header>
+
 
     <!-- Фильтрация и сортировка -->
     <div style="background-color: #fccf7c"class="offcanvas offcanvas-start" tabindex="-1" id="filterSidebar" aria-labelledby="filterSidebarLabel">
@@ -93,13 +97,13 @@
 
 
     <!-- Main Content -->
-    <div class="container training-container mt-5 pt-5">
+    <div style="min-width: 250px" class="container training-container mt-5 pt-5">
         <h1 class="training-title mb-4">Список тренировок</h1>
         <ul class="list-group">
             {% for training in trainings %}
                 <li class="list-group-item training-item p-3">
                     <a href="{% url 'training_detail' training.pk %}" class="training-link text-decoration-none text-dark">
-                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <strong>Вид спорта:</strong> {{ training.sport_type }}<br>
                                 <strong>Дата и время:</strong> {{ training.date }}<br>

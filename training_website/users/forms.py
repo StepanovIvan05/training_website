@@ -28,7 +28,7 @@ class LoginForm(AuthenticationForm):
 
 class TrainingForm(forms.ModelForm):
 
-    sport_type = forms.ModelChoiceField(queryset=SportType.objects.all(), empty_label="Выберите вид спорта")
+    sport_type = forms.ModelChoiceField(queryset=SportType.objects.all(), empty_label="Выберите вид спорта", label="Вид спорта")
 
     class Meta:
         model = Training
