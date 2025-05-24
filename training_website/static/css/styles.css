@@ -259,11 +259,15 @@ p {
 .full-message {
     display: inline-block;
     color: red;
+    background-color: #be8f59;
     font-weight: bold;
-    margin-left: 10px;
+    margin-top: 17px;
+    border: 2px solid red;
+    padding: 10px;
+    border-radius: 4px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 688px) {
     header {
         align-items: flex-start;
         padding: 15px;
