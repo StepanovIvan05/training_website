@@ -13,19 +13,21 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # или yandex, mail.ru и т.д.
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'istepanov130@gmail.com'
-with open("SMTP KEY.txt", "r", encoding="utf-8") as file:
-    first_line = file.readline()  # Читает первую строку
-EMAIL_HOST_PASSWORD = first_line  # не обычный пароль, а специальный для SMTP
+#with open("SMTP_KEY.txt", "r", encoding="utf-8") as file:
+#    first_line = file.readline()
+with open(os.path.join(BASE_DIR, 'SMTP_KEY.txt')) as f:
+    EMAIL_HOST_PASSWORD = f.read().strip()
+#EMAIL_HOST_PASSWORD = first_line  # не обычный пароль, а специальный для SMTP
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -35,9 +37,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9^x681ce2*o)708wrr#y!)$5qss0+uhi1f*n7_)o3k^+x3na@#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['51.250.35.103', 'localhost', '127.0.0.1', 'signupsport.ru', 'www.signupsport.ru', 'api.ip.pn']
+ALLOWED_HOSTS = ['147.45.158.114', 'localhost', '127.0.0.1', 'signupsport.ru', 'www.signupsport.ru', 'api.ip.pn']
 
 MEDIA_URL = '/media/'  # URL для доступа к файлам
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Директория хранения файлов
@@ -140,6 +142,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # Указывает на папку static в корне проекта
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

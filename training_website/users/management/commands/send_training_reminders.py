@@ -3,6 +3,13 @@ from django.utils import timezone
 from django.core.mail import send_mail
 from users.models import Training
 from datetime import timedelta
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 class Command(BaseCommand):
     help = 'Отправляет напоминания участникам тренировок за 1 час до начала'
@@ -10,6 +17,8 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         now = timezone.now()
         hour_later = now + timedelta(hours=8)
+        logging.info(now)
+        logging.info(hour_later)
 
         trainings = Training.objects.filter(date__range=(hour_later - timedelta(minutes=2.5), hour_later + timedelta(minutes=2.5)))
 

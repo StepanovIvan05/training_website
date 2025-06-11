@@ -1,0 +1,308 @@
+/* Общие стили для страницы */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e3f6ff;
+    background-image: url('fon.png');
+    padding-top: 60px; /* отступ под фиксированную шапку */
+}
+
+#navbar {
+    min-width: 260px !important;
+    top: 0;
+    background-color: #fccf7c;
+    width: 100%;
+    transition: top 0.3s;
+    border-radius: 0 0 8px 8px;
+}
+
+/* Стили для блока навигации*/
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px !important;
+    background-color: #fccf7c;
+    z-index: 1000;
+    transition: top 0.3s;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+img {
+    object-fit: cover;
+    max-width: 100%;
+    height: auto;
+}
+
+p {
+    text-align: left;
+}
+
+.training-img {
+    border-radius: 8px;
+}
+
+/* Контейнер для списка тренировок */
+.training-container {
+    background-color: #fccf7c;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Заголовок страницы */
+.training-title {
+    text-align: center;
+    font-size: 2rem;
+}
+
+/* Список тренировок */
+.training-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+/* Элемент списка тренировок */
+.training-item {
+    background-color: #fff6e5;
+    border: 1px solid #f5d9a6;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Эффект при наведении на элемент списка */
+.training-link:hover {
+    background-color: #ffe9b3;
+    border-radius: 8px;
+}
+
+/* Стили для текста внутри элемента списка */
+.training-item strong {
+    color: #007bff;
+}
+
+.training-item:last-child {
+    border-bottom: none;
+}
+
+.training-info {
+    color :black;
+    display: flex;
+    align-items: center;
+    font-size: larger;
+    justify-content: space-between;
+}
+
+.sport-icon {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Основной стиль кнопки */
+.btn {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0);
+    color: #007bff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Эффект при наведении */
+.btn:hover {
+    background-color: #be8f59;
+    transform: scale(1.02); /* Немного увеличиваем кнопку */
+}
+
+/* Эффект при нажатии */
+.btn:active {
+    transform: scale(0.98); /* Слегка уменьшаем */
+}
+
+/* Если нужно сделать кнопку "прозрачной" */
+.btn.transparent {
+    background-color: transparent;
+    color: royalblue;
+    border: 2px solid royalblue;
+}
+
+/* Делаем кнопку "неактивной" */
+.btn:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.btn.blue{
+    color: #007bff !important;
+    border-color: #007bff !important;
+}
+
+/* Ссылка "Выйти" */
+.btn.red {
+    color: #ff0000 !important;
+    border-color: #ff0000 !important;
+}
+
+.btn.red.logout-link {
+    margin-left: 5px;
+}
+
+/* Стили формы */
+.form-container {
+    margin-top: 20px;
+    padding: 20px 20px;
+    background-color: #fccf7c;
+    border-radius: 8px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.input_training_data {
+    padding: 10px;
+    margin: 10px 0px;
+}
+
+/* Общие стили для страниц регистрации и входа */
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fccf7c;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовок страницы */
+.auth-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+    margin-top: -5px;
+}
+
+/* Форма */
+.auth-form {
+    display: block;
+    flex-direction: column;
+    padding: 1;
+}
+
+.auth-form label{
+    display: block;
+    margin: 5px
+}
+
+/* Поля формы */
+.auth-form input,
+.auth-form select,
+.auth-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-row label {
+    margin-right: 5px;
+    white-space: nowrap;
+}
+
+.form-row select,
+.form-row p {
+    float: left;
+    text-align: center;
+    margin: 1px;
+}
+
+.auth-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* Сообщения об ошибках */
+.error-message {
+    color: #dc3545;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Стили для детальной страницы */
+.training-detail {
+    background-color: #fccf7c;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.training-link {
+    text-decoration: none;
+}
+
+.full-message {
+    display: inline-block;
+    color: red;
+    background-color: #be8f59;
+    font-weight: bold;
+    margin-top: 17px;
+    border: 2px solid red;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+@media (max-width: 688px) {
+    header {
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    .training-detail {
+        padding: 10px;
+    }
+
+    .training-item {
+        font-size: 0.95rem;
+    }
+
+    .training-list li {
+        font-size: 0.9rem;
+    }
+
+    .sport-icon {
+        width: 60px;
+        height: 60px;
+        margin-top: 10px;
+    }
+
+    .training-title {
+        font-size: 1.5rem;
+    }
+
+    .training-link {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filter-form {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 10px;
+    }
+}
