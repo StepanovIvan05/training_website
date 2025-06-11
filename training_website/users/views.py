@@ -79,6 +79,7 @@ def training_list(request):
         'trainings': trainings
     })
 
+@login_required
 def user_logout(request):
     logout(request)
     return redirect('login')  # Перенаправление на страницу входа после выхода
@@ -161,7 +162,7 @@ class TrainingUpdateView(LoginRequiredMixin, UpdateView):
         context['sport_types'] = SportType.objects.all()
         return context                        
 
-    
+
 class TrainingDeleteView(LoginRequiredMixin, DeleteView):
     model = Training
     template_name = 'training_confirm_delete.html'
@@ -189,6 +190,7 @@ def join_training(request, training_id):
 
 @login_required
 def leave_training(request, training_id):
+    
     training = get_object_or_404(Training, id=training_id)
 
     if request.user in training.participants.all():
@@ -198,3 +200,4 @@ def leave_training(request, training_id):
         messages.error(request, "Вы не записаны на эту тренировку!")
 
     return redirect('training_detail', pk=training.id)
+
