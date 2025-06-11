@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | Админка {% endblock %}
+
+{% block branding %}
+    {# Скрываем шапку Django administration #}
+    <style>
+        /* Можно добавить, если нужно дополнительно убрать отступы */
+        #header {
+            display: none;
+        }
+        body {
+            padding-top: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block nav-global %}
+    {# Убираем глобальную навигацию (если не нужна) #}
+{% endblock %}
